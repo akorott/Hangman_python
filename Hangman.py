@@ -18,7 +18,7 @@ def hang_man(turn_count):
     print("-")
 
 # Main game function
-def underscore_to_letter():
+def play():
     random_word = randomword.get_random_word()
     random_word_split = list(random_word)
 
@@ -72,7 +72,7 @@ print(f"|     / \\")
 print("-")
 
 # Call the main function to start the game
-underscore_to_letter()
+play()
 
 # Loss message if user doesn't guess the word by the end of the game.
 print('You Lose!')
