@@ -12,6 +12,7 @@ def hanging():
     guess8 = '\\'
 
     print('--------')
+    print('yoyooy')
     print(f"|     {guess1}")
     print(f"|     {guess2}")
     print(f"|    {guess4}{guess3}{guess5}")
