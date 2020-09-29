@@ -1,70 +1,71 @@
 import randomword
-import time
 
-print('--------')
-print(f"|     |")
-print(f"|     O")
-print(f"|    \|/")
-print(f"|     |")
-print(f"|    / \\")
-print("-")
+class RepeatedGuess(Exception):
+    pass
 
-def hanging():
-    guess1 = '|'
-    guess2 = 'O'
-    guess3 = '|'
-    guess4 = '\\'
-    guess5 = '/'
-    guess6 = '|'
-    guess7 = '/'
-    guess8 = '\\'
+res = [''] * 8
+
+def hang_man(turn_count):
+    hangman_full = ['|', 'O', '|', '|', '\\', '/', '/', '\\']
+
+
+    res[turn_count] = hangman_full[turn_count]
 
     print('--------')
-    print(f"|     {guess1}")
-    print(f"|     {guess2}")
-    print(f"|    {guess4}{guess3}{guess5}")
-    print(f"|     {guess6}")
-    print(f"|    {guess7} {guess8}")
+    print(f"|      {res[0]}")
+    print(f"|      {res[1]}")
+    print(f"|     {res[4]}{res[2]}{res[5]}")
+    print(f"|      {res[3]}")
+    print(f"|     {res[6]} {res[7]}")
     print("-")
 
 
-print('You have 8 tries to guess the word!')
+def underscore_to_letter():
+    random_word = randomword.get_random_word()
+    random_word_split = list(random_word)
+    print(random_word_split)
 
-random_word = randomword.get_random_word()
-random_word_split = list(random_word)
+    res = ['_'] * len(random_word)
 
-print(random_word_split)
-blank_spaces = '_ ' * len(random_word)
-print(blank_spaces)
+    turn_count = 0
+    guess_list = []
 
-# def user_guess():
-#     counter = 0
-#     answer = ''
-#     try:
-#         guess = input()
-#     except:
-#         ValueError
-#
-# print(user_guess())
+    while turn_count < 8:
+        try:
+            guess = input('Enter a letter: ')
+            if guess in guess_list:
+                raise RepeatedGuess
+            guess_list.append(guess)
+        except RepeatedGuess:
+            print("")
+            print("You already guessed that, try again!")
+            print("")
 
+        if guess == random_word:
+            print('You win!')
+            break
 
+        elif guess in random_word_split:
+            for count, value in enumerate(random_word_split):
+                if guess == value:
+                    res[count] = value.upper()
 
-count = 0
-while count < 8:
-    guess = input('Guess a letter or word: ')
-    if guess in random_word_split or guess == random_word:
-        hanging(guess)
-        print('Nice!')
-    else:
-        count += 1
-        print('incorrect')
+                else:
+                    continue
+            print(''.join(res))
+        else:
+            print(guess.upper() + ' is not in the word.')
+            hang_man(turn_count)
+            turn_count += 1
 
-print('You lose!')
+    print('You lose!')
 
+print('--------')
+print(f"|      |")
+print(f"|      O")
+print(f"|     \|/")
+print(f"|      |")
+print(f"|     / \\")
+print("-")
 
-
-
-
-
-
-
+underscore_to_letter()
