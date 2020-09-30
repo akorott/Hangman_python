@@ -21,7 +21,7 @@ def hang_man(turn_count):
 def play():
     random_word = randomword.get_random_word()
     random_word_split = list(random_word.upper())
-    print(random_word)
+
     res = ['_'] * len(random_word)
 
     turn_count = 0
