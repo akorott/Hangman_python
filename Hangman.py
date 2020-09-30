@@ -20,20 +20,24 @@ def hang_man(turn_count):
 # Main game function
 def play():
     random_word = randomword.get_random_word()
-    random_word_split = list(random_word)
-
+    random_word_split = list(random_word.upper())
+    print(random_word)
     res = ['_'] * len(random_word)
 
     turn_count = 0
     guess_list = []
 
-    while turn_count < 8:
+    while turn_count < 9:
         # Check user input
+        if turn_count == 8:
+            print('You lose!')
+            break
+
         try:
-            guess = input('Please guess a letter or word: ')
+            guess = input('Please guess a letter or word: ').upper()
             if guess in guess_list:
                 raise RepeatedGuess
-            guess_list.append(guess)
+            guess_list.append(guess.upper())
             # Display the below if user tries to guess a letter that he/she already guessed
         except RepeatedGuess:
             print("")
@@ -41,7 +45,7 @@ def play():
             print("")
 
         # User wins the game if the word is guessed correctly
-        if guess == random_word:
+        if guess == random_word.upper():
             print('You win!')
             break
 
@@ -53,6 +57,10 @@ def play():
                 else:
                     continue
             print(''.join(res))
+            if ''.join(res) == ''.join(random_word_split):
+                print('You win!')
+                break
+
         # Call the hang_man function and display the current status of hangman
         else:
             print(guess.upper() + ' is not in the word.')
@@ -73,6 +81,3 @@ print("-")
 
 # Call the main function to start the game
 play()
-
-# Loss message if user doesn't guess the word by the end of the game.
-print('You Lose!')
